@@ -1,4 +1,5 @@
 const express = require('express');
+const lodash = require('lodash')
 const annu = require('../logger/logger')
 const annubansal = require('../util/helper')
 const annu1 = require('../validator/formatter')
@@ -19,8 +20,27 @@ router.get('/test-me', function (req, res) {
     res.send('My first ever api!')
 });
 
-router.get('/test-me1', function (req, res) {
-    res.send('My second ever api!')
+router.get('/helo', function (req, res) {
+    const nameMonth = ["January", "February", "March", "April", "May", "June", "July", "September", "October", "November", "December"]
+    const chunk = lodash.chunk(nameMonth, 3)
+    console.log(chunk)
+
+    const oddNo = [1,3,5,7,9,11,13,15,17,19]
+    const tail = lodash.tail(oddNo)
+    console.log(tail)
+
+    const arr1 = [1,2,3]
+    const arr2 = [1,3,4]
+    const arr3 = [1,4,5]
+    const arr4 = [1,5,6]
+    const arr5 = [1,6,7]
+    const mixarr = lodash.union(arr1, arr2, arr3, arr4, arr5)
+    console.log(mixarr)
+
+    const movies = [["horror","The Shining"],["drama","Titanic"],["thriller","Shutter Island"],["fantasy","Pans Labyrinth"]]
+    const movie = lodash.fromPairs(movies)
+    console.log(movie)
+    res.send('Helo there!')
 });
 
 router.get('/test-me2', function (req, res) {
