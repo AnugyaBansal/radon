@@ -43,17 +43,113 @@ router.get('/helo', function (req, res) {
     res.send('Helo there!')
 });
 
-router.get('/test-me2', function (req, res) {
-    res.send('My third api!')
+router.get('/movies', function (req, res) {
+    let moviesName = ['Rand de basanti', 'The shining', 'Lord of the rings', 'Batman begins']
+    console.log(moviesName)
+    res.send({data:moviesName})
 });
 
-router.get('/test-me3', function (req, res) {
-    res.send('My 4th api!')
+router.get('/movies/:indexNumber', function (req, res) {
+    let movies = ['Rand de basanti', 'The shining', 'Lord of the rings', 'Batman begins']
+    console.log(' The request objects is ' +JSON.stringify(req.params))
+    console.log(' movies name is ' +req.params.indexNumber)
+    if(req.params.indexNumber<movies,len-1){
+        console.log("use a valid number")
+    }
+    res.send('movies1!')
 });
 
-router.get('/test-me4', function (req, res) {
-    res.send('My last api!')
+// router.get('/movies1/:indexNumber', function (req, res) {
+//     let movies = ['Rand de basanti', 'The shining', 'Lord of the rings', 'Batman begins']
+//     console.log(' The request objects is ' +JSON.stringify(req.params))
+//     console.log(' Movies name is ' +req.params.indexNumber)
+//     if(i=0, i>4, i++){
+//         console.log("use a valid number")
+//     }
+    
+//     res.send('Done!')
+// });
+
+router.get('/films', function (req, res){
+    const arr=[
+        {
+            "id":1,
+            "name":"The Shining"
+        },
+        {
+            "id":2,
+            "name":"Incendies"
+        },
+        {
+            "id":3,
+            "name":"Rang de Basanti"
+        },
+        {
+            "id":4,
+            "name":"Finding Nemo"
+        }
+    ]
+    console.log(arr)
+    res.send('arr!')
+})
+
+
+router.get('/films/:filmId', function (req, res){
+    const newFilms=[
+        {
+            "id":1,
+            "name":"The Shining"
+        },
+        {
+            "id":2,
+            "name":"Incendies"
+        },
+        {
+            "id":3,
+            "name":"Rang de Basanti"
+        },
+        {
+            "id":4,
+            "name":"Finding Nemo"
+        }
+    ]
+    console.log(JSON.stringify(req.query))
+   
+    if(req.query>newFilms.length-1){
+        return("no movie exists with this id")}
+        res.send('API!')
+    
+})
+
+
+
+
+router.get('/sol1', function (req, res) {
+    let arr = [1,2,3,5,6,7]
+    let total = 0;
+    for (var i in arr){
+        total += arr[i];
+    }
+    let lastDigit = arr.pop()
+    let consecutiveSum = lastDigit * (lastDigit+1)/2
+    let missingNumber = consecutiveSum-total
+    res.send( {data: missingNumber})
 });
+
+router.get('/sol2', function (req, res) {
+    let arr = [33, 34, 35, 37, 38]
+    let len = arr.length
+    let total = 0;
+    for (var i in arr){
+        total += arr[i];
+    }
+    let firstDigit = arr.pop[0]
+    let lastDigit = arr.pop()
+    let consecutiveSum = (len + 1) * (firstDigit + lastDigit)/2
+    let missingNumber = consecutiveSum-total
+    res.send( {data: missingNumber})
+});
+
 
 module.exports = router;
 // adding this comment for no reason
