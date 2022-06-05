@@ -50,26 +50,18 @@ router.get('/movies', function (req, res) {
 });
 
 router.get('/movies/:indexNumber', function (req, res) {
-    let movies = ['Rand de basanti', 'The shining', 'Lord of the rings', 'Batman begins']
-    console.log(' The request objects is ' +JSON.stringify(req.params))
-    console.log(' movies name is ' +req.params.indexNumber)
-    
-res.send('movies1!')
-});
-
-router.get('/movies1/:indexNumber', function (req, res) {
-    let movies = ['Rand de basanti', 'The shining', 'Lord of the rings', 'Batman begins']
-    console.log(' The request objects is ' +JSON.stringify(req.params))
-    console.log(' Movies name is ' +req.params.indexNumber)
-    if(i=0, i>4, i++){
-        console.log("use a valid number")
+    const moviesList = ['Rand de basanti', 'The shining', 'Lord of the rings', 'Batman begins']
+    if ((req.params.indexNumber < moviesList.length)){
+        var movieName = moviesList[req.params.indexNumber]
+    }else{
+        movieName = "this not a part of movie list"
     }
     
-    res.send('Done!')
+    res.send(  { movie:movieName , status: true } )
 });
 
 router.get('/films', function (req, res){
-    const arr=[
+    const films=[
         {
             "id":1,
             "name":"The Shining"
@@ -87,13 +79,13 @@ router.get('/films', function (req, res){
             "name":"Finding Nemo"
         }
     ]
-    console.log(arr)
-    res.send('arr!')
+    
+    res.send({data: films, status: true})
 })
 
 
 router.get('/films/:filmId', function (req, res){
-    const newFilms=[
+    const films=[
         {
             "id":1,
             "name":"The Shining"
@@ -111,11 +103,19 @@ router.get('/films/:filmId', function (req, res){
             "name":"Finding Nemo"
         }
     ]
-    console.log(JSON.stringify(req.params))
-   
-    if(req.params>newFilms.length-1){
-        return("no movie exists with this id")}
-        res.send('API!')
+    let ids = req.params.filmId
+    if(req.params.filmId <= films.length){
+        for (let i = 0; i < films.length; i++) {
+        
+            if (req.params.filmId == films[i].id){
+                var filmName = films[i]
+            }
+    }
+         
+     }else{
+        var filmName = "id is not valid"
+    }
+    res.send({data:filmName, status:true})
     
 })
 
