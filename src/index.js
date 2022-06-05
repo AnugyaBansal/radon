@@ -10,12 +10,12 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-// mongoose.connect("mongodb+srv://AnugyaBansal:kLcKQH0ev1bxjVIr@cluster0.lfctl.mongodb.net/Anugya1234",
-// {
-//     userNewUrlParser:true
-// })
-// .then( () =>console.log("mongodb is connected"))
-// .catch ( err => console.log(err))
+mongoose.connect("mongodb+srv://AnugyaBansal:kLcKQH0ev1bxjVIr@cluster0.lfctl.mongodb.net/Anugya1234",
+{
+    userNewUrlParser:true
+})
+.then( () =>console.log("mongodb is connected"))
+.catch ( err => console.log(err))
 
 
 app.use('/', route);

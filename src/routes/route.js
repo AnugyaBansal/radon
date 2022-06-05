@@ -53,22 +53,20 @@ router.get('/movies/:indexNumber', function (req, res) {
     let movies = ['Rand de basanti', 'The shining', 'Lord of the rings', 'Batman begins']
     console.log(' The request objects is ' +JSON.stringify(req.params))
     console.log(' movies name is ' +req.params.indexNumber)
-    if(req.params.indexNumber<movies,len-1){
-        console.log("use a valid number")
-    }
-    res.send('movies1!')
+    
+res.send('movies1!')
 });
 
-// router.get('/movies1/:indexNumber', function (req, res) {
-//     let movies = ['Rand de basanti', 'The shining', 'Lord of the rings', 'Batman begins']
-//     console.log(' The request objects is ' +JSON.stringify(req.params))
-//     console.log(' Movies name is ' +req.params.indexNumber)
-//     if(i=0, i>4, i++){
-//         console.log("use a valid number")
-//     }
+router.get('/movies1/:indexNumber', function (req, res) {
+    let movies = ['Rand de basanti', 'The shining', 'Lord of the rings', 'Batman begins']
+    console.log(' The request objects is ' +JSON.stringify(req.params))
+    console.log(' Movies name is ' +req.params.indexNumber)
+    if(i=0, i>4, i++){
+        console.log("use a valid number")
+    }
     
-//     res.send('Done!')
-// });
+    res.send('Done!')
+});
 
 router.get('/films', function (req, res){
     const arr=[
@@ -113,9 +111,9 @@ router.get('/films/:filmId', function (req, res){
             "name":"Finding Nemo"
         }
     ]
-    console.log(JSON.stringify(req.query))
+    console.log(JSON.stringify(req.params))
    
-    if(req.query>newFilms.length-1){
+    if(req.params>newFilms.length-1){
         return("no movie exists with this id")}
         res.send('API!')
     
