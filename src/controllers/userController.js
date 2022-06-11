@@ -23,21 +23,8 @@ const getUsersData= async function (req, res) {
 }
 
 
-const mid= function(req, res, next){
-    let currentDate= new Date();
-    let dateTime= currentDate.getDate() + "-"
-                  +(currentDate.getMonth()+1) + "-"
-                  +currentDate.getFullYear() + " "
-                  +currentDate.getHours() + ":"
-                  +currentDate.getMinutes() + ":"
-                  +currentDate.getSeconds(); 
-    let ip= req.ip
-    let url= req.url
-    console.log(`${dateTime}, ${ip}, ${url}`)
-    res.send(`${dateTime}, ${ip}, ${url}`)
-    next()
-}
-module.exports.mid=mid
+
+// module.exports.mid=mid
 module.exports.createUser= createUser
 module.exports.getUsersData= getUsersData
 module.exports.basicCode= basicCode

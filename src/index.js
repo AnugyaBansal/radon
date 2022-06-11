@@ -20,7 +20,22 @@ mongoose.connect("mongodb+srv://AnugyaBansal1:XUEwXSjvoCKPXBV9@cluster0.piara.mo
 //   }
 //   );
 
-  
+const mid= function(req, res, next){
+    let currentDate= new Date();
+    let dateTime= currentDate.getDate() + "-"
+                  +(currentDate.getMonth()+1) + "-"
+                  +currentDate.getFullYear() + " "
+                  +currentDate.getHours() + ":"
+                  +currentDate.getMinutes() + ":"
+                  +currentDate.getSeconds(); 
+    let ip= req.ip
+    let url= req.url
+    console.log(`${dateTime}, ${ip}, ${url}`)
+    res.send(`${dateTime}, ${ip}, ${url}`)
+    next()
+}
+
+app.use(mid)
 
 app.use('/', route);
 
