@@ -5,23 +5,34 @@ const createUser = async function (req, res) {
   //You can name the req, res objects anything.
   //but the first parameter is always the request 
   //the second parameter is always the response
-  let data = req.body;
+  try{
+    let data = req.body;
+    console.log(data)
+    if ( Object.keys(data).length != 0) {
   let savedData = await userModel.create(data);
-  console.log(req.newAtribute);
-  res.send({ msg: savedData });
+  //console.log(req.newAtribute);
+  res.status(201).send({ msg: savedData });
+  }
+  else res.status(400).send({ msg: "BAD REQUEST"})
+}
+  catch(err){
+    console.log("This is the error:", err.message)
+    res.status(500).send({ msg: "Error", error: err.message })
+  }
 };
 
 const loginUser = async function (req, res) {
+try{
   let userName = req.body.emailId;
   let password = req.body.password;
-
+  console.log(req.body)
+if (Object.keys(req.body).length!=2){
+  res.status(400).send({msg: "Bad Request"})
+}
   let user = await userModel.findOne({ emailId: userName, password: password });
   if (!user)
-    return res.send({
-      status: false,
-      msg: "username or the password is not corerct",
-    });
-
+    return res.status(403).send({msg: "Username or password is incorrect, Forbidden"});
+  
   // Once the login is successful, create the jwt token with sign function
   // Sign function has 2 inputs:
   // Input 1 is the payload or the object containing data to be set in token
@@ -38,17 +49,30 @@ const loginUser = async function (req, res) {
   );
   res.setHeader("x-auth-token", token);
   res.send({ status: true, data: token });
+}
+catch(err){
+  console.log("This is the error:", err.message)
+  res.status(500).send({ msg: "Error", error: err.message })
+}
 };
 
 const getUserData = async function (req, res) {
 
   let userId = req.params.userId;
+  try{
   let userDetails = await userModel.findById(userId);
   if (!userDetails)
-    return res.send({ status: false, msg: "No such user exists" });
+    return res.status(404).send({ status: false, msg: "No such user exists" });
 
-  res.send({ status: true, data: userDetails });
-};
+    res.status(201).send({ status: true, data: userDetails });
+  }
+  catch(err){
+    console.log("This is the error:", err.message)
+    res.status(500).send({ msg: "Error", error: err.message })
+  }
+
+  };
+
 
 const updateUser = async function (req, res) {
 // Do the same steps here:
@@ -57,6 +81,7 @@ const updateUser = async function (req, res) {
 // Return a different error message in both these cases
 let header= req.headers
   let userId = req.params.userId;
+  try{
   let user = await userModel.findById(userId);
   //Return an error if no user with the given id exists in the db
   if (!user) {
@@ -65,20 +90,31 @@ let header= req.headers
 
   let userData = req.body;
   let updatedUser = await userModel.findOneAndUpdate({ _id: userId }, userData);
-  res.send({ status: updatedUser, data: updatedUser });
-};
+  res.status(200).send({ status: updatedUser, data: updatedUser });
+}
+catch(err){
+  console.log("This is the error:", err.message)
+  res.status(500).send({ msg: "Error", error: err.message })
+}
+}
+
 
 let deleteUser = async function(req,res){
   let userId = req.params.userId
+  try{
   let user= await userModel.findById(userId)
   if(!user){
     return res.send({status: false, mssg: "no such user exists"})
   }
 
     let updatedUser = await userModel.findOneAndUpdate({ _id: userId }, {$set:{isDeleted:true}},{new:true});
-    res.send({status :true, data : updatedUser})
+    res.status(400).send({status :true, data : updatedUser})
   }
-
+  catch(err){
+    console.log("This is the error:", err.message)
+    res.status(500).send({ msg: "Error", error: err.message })
+  }
+}
 
 const postMessage = async function (req, res) {
     let message = req.body.message
@@ -89,7 +125,7 @@ const postMessage = async function (req, res) {
     
     //userId for which the request is made. In this case message to be posted.
     
-
+try{
     let user = await userModel.findById(req.params.userId)
     if(!user) return res.send({status: false, msg: 'No such user exists'})
     
@@ -99,8 +135,13 @@ const postMessage = async function (req, res) {
     let updatedUser = await userModel.findOneAndUpdate({_id: user._id},{posts: updatedPosts}, {new: true})
 
     //return the updated user document
-    return res.send({status: true, data: updatedUser})
+    return res.status(200).send({status: true, data: updatedUser})
 }
+    catch(err){
+      console.log("This is the error:", err.message)
+      res.status(500).send({ msg: "Error", error: err.message })
+    }
+  }
 
 module.exports.createUser = createUser;
 module.exports.getUserData = getUserData;
