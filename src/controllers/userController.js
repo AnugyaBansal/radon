@@ -62,13 +62,13 @@ const getUserData = async function (req, res) {
   try{
   let userDetails = await userModel.findById(userId);
   if (!userDetails)
-    return res.status(404).send({ status: false, msg: "No such user exists" });
+    return res.send({ status: false, msg: "No such user exists" });
 
-    res.status(201).send({ status: true, data: userDetails });
+    res.send({ status: true, data: userDetails });
   }
   catch(err){
     console.log("This is the error:", err.message)
-    res.status(500).send({ msg: "Error", error: err.message })
+    res.send({ msg: "Error", error: err.message })
   }
 
   };
@@ -108,11 +108,11 @@ let deleteUser = async function(req,res){
   }
 
     let updatedUser = await userModel.findOneAndUpdate({ _id: userId }, {$set:{isDeleted:true}},{new:true});
-    res.status(400).send({status :true, data : updatedUser})
+    res.send({status :true, data : updatedUser})
   }
   catch(err){
     console.log("This is the error:", err.message)
-    res.status(500).send({ msg: "Error", error: err.message })
+    res.send({ msg: "Error", error: err.message })
   }
 }
 
@@ -135,11 +135,11 @@ try{
     let updatedUser = await userModel.findOneAndUpdate({_id: user._id},{posts: updatedPosts}, {new: true})
 
     //return the updated user document
-    return res.status(200).send({status: true, data: updatedUser})
+    return res.send({status: true, data: updatedUser})
 }
     catch(err){
       console.log("This is the error:", err.message)
-      res.status(500).send({ msg: "Error", error: err.message })
+      res.send({ msg: "Error", error: err.message })
     }
   }
 
